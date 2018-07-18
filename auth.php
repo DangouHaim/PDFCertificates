@@ -7,7 +7,7 @@ if(isset($_POST["Login"]) && isset($_POST["Password"]))
 	//echo $_POST["Password"];
 	if($_POST["Login"] == "admin" && $_POST["Password"] === $hash)
 	{
-		setcookie("AUTH", "true");
+		setcookie("AUTH", MD5($_POST["Login"]) . $_POST["Password"]);
 		header('Location: index.php');
 	}
 }
