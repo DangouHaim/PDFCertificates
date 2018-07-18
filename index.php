@@ -25,6 +25,8 @@ elseif ($_COOKIE["AUTH"] != MD5("admin").MD5("admin")) {
 <body>
 	
 
+<br><br><br><br><br><br><br>
+
 <section>
 	<div class="container">
 		<div class="row">
@@ -245,7 +247,7 @@ elseif ($_COOKIE["AUTH"] != MD5("admin").MD5("admin")) {
 						  					"9. FMT Logopedics",
 						  					"10. FMT Dent",
 						  					"11. FMT Equine",
-						  					"12. FMT Special Course (другое)"
+						  					"12. FMT Special Course"
 						  				);
 										foreach ($Curses as $curse) {
 											echo "<option value=\"$curse\">$curse</option>";

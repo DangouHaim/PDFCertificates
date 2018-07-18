@@ -8,17 +8,17 @@ $MonthArray = array("January","February","March","April","May","June","July","Au
 
 $Curses = array(
 	"1. FMT Basic" => 'img/basic.jpg',
-	"2. FMT Basic+Perfomance" => "img/basic.jpg",
-	"3. FMT Perfomance" => "img/basic.jpg",
-	"4. FMT Blades" => "img/basic.jpg",
-	"5. FMT Blades Advanced" => "img/basic.jpg",
-	"6. FMT SCN" => "img/basic.jpg",
-	"7. FMT SCN+MOV" => "img/basic.jpg",
-	"8. FMT MOV" => "img/basic.jpg",
+	"2. FMT Basic+Perfomance" => "img/2. FMT Basic+Perfomance.jpg",
+	"3. FMT Perfomance" => "img/3. FMT Perfomance.jpg",
+	"4. FMT Blades" => "img/4. FMT Blades.jpg",
+	"5. FMT Blades Advanced" => "img/5. FMT Blades Advanced.jpg",
+	"6. FMT SCN" => "img/6. FMT SCN.jpg",
+	"7. FMT SCN+MOV" => "img/7. FMT SCN+MOV.jpg",
+	"8. FMT MOV" => "img/8. FMT MOV.jpg",
 	"9. FMT Logopedics" => "img/basic.jpg",
 	"10. FMT Dent" => "img/basic.jpg",
-	"11. FMT Equine" => "img/basic.jpg",
-	"12. FMT Special Course (другое)" => "img/basic.jpg"
+	"11. FMT Equine" => "img/11. FMT Equine.jpg",
+	"12. FMT Special Course" => "img/12. FMT Special Course.jpg"
 );
 
 
