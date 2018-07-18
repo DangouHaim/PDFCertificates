@@ -15,9 +15,14 @@ if(isset($_POST["Login"]) && isset($_POST["Password"]))
 <!DOCTYPE html>
 <html>
 <head>
+
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+
 	<script type="text/javascript" src="jquery.js"></script>
 	<script type="text/javascript" src="jquery-md5.js"></script>
 	<script type="text/javascript">
+
 		//var md5 = ;
 		//Create (hex-encoded) HMAC-MD5 hash of a given string value and key:
 
@@ -35,16 +40,36 @@ if(isset($_POST["Login"]) && isset($_POST["Password"]))
 	        	$("#Password").val($.md5($("#Password").val()));
 	        });
 	    });
+
 	</script>
 	<title></title>
 </head>
 <body>
-	<form id="form" action="auth.php" method="post">
-		<label>Login</label>
-		<input id="Login" type="text" name="Login">
-		<label>Password</label>
-		<input id="Password" type="Password" name="Password">
-		<input type="submit" value="Login">
-	</form>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<section>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-offset-4 col-md-4">
+				<form id="form" action="auth.php" method="post">
+		  		<label for="Login">Login</label>
+		    	<input name="Login" required type="text" class="form-control" id="Login">
+
+		  		<label for="Login">Password</label>
+		    	<input name="Password" required type="Password" class="form-control" id="Password">
+				<br>
+				<input class="btn btn-primary btn-block" type="submit" value="Login">
+			</form>
+			</div>
+		</div>
+	</div>
+</section>
+
 </body>
 </html>
