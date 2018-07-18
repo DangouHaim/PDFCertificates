@@ -5,6 +5,7 @@ if(!isset($_COOKIE["AUTH"]))
 }
 elseif ($_COOKIE["AUTH"] != MD5("admin").MD5("admin")) {
 	header('Location: auth.php');
+	die;
 }
 ?>
 <!DOCTYPE html>

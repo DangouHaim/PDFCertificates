@@ -8,7 +8,14 @@ if(isset($_POST["Login"]) && isset($_POST["Password"]))
 	if($_POST["Login"] == "admin" && $_POST["Password"] === $hash)
 	{
 		setcookie("AUTH", MD5($_POST["Login"]) . $_POST["Password"]);
+		setcookie("ERR","",-3600);
 		header('Location: index.php');
+		die;
+	}
+	else {
+		setcookie("ERR","Неверный логин или пароль");
+		header('Location: auth.php');
+		die;
 	}
 }
 ?>
@@ -16,6 +23,7 @@ if(isset($_POST["Login"]) && isset($_POST["Password"]))
 <html>
 <head>
 
+	<meta charset="UTF-8">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-theme.min.css">
 
@@ -58,14 +66,15 @@ if(isset($_POST["Login"]) && isset($_POST["Password"]))
 		<div class="row">
 			<div class="col-md-offset-4 col-md-4">
 				<form id="form" action="auth.php" method="post">
-		  		<label for="Login">Login</label>
-		    	<input name="Login" required type="text" class="form-control" id="Login">
+			  		<label for="Login">Login</label>
+			    	<input name="Login" required type="text" class="form-control" id="Login">
 
-		  		<label for="Login">Password</label>
-		    	<input name="Password" required type="Password" class="form-control" id="Password">
-				<br>
-				<input class="btn btn-primary btn-block" type="submit" value="Login">
-			</form>
+			  		<label for="Login">Password</label>
+			    	<input name="Password" required type="Password" class="form-control" id="Password">
+					<br>
+					<input class="btn btn-primary btn-block" type="submit" value="Login">
+				</form>
+				<h4 style="color: red; text-align: center;"><?php echo $_COOKIE["ERR"]; ?></h4>
 			</div>
 		</div>
 	</div>
