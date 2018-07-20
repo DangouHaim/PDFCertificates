@@ -44,36 +44,18 @@ if(isset($_POST['name']) && isset($_POST['Country']) && isset($_POST['City']) &&
 	$mount = $_POST['Mounth'];
 	$year = $_POST['Year'];
 	$curs = $_POST['Curs'];
+	$Instructor = $_POST['Instructor'];
 	$names = explode("\n",$_POST['name']);
-	sort($names);
-
-
 	$i = 0;
 
 	$pdf = new FPDF('L','mm','A4');
 	foreach (GenerateNumbers($names,$city,$mount,$year,$tcode[$curs]) as $num) {
-		FmtBasic($pdf,$num,$names[$i],$cityCode[$city],$contry,$MonthArray[$mount-1],$day,"20".$year,$Curses[$curs]);
+		FmtBasic($pdf,$num,$names[$i],$cityCode[$city],$contry,$MonthArray[$mount-1],$day,"20".$year,$Curses[$curs],$Instructor);
 		$i++;
 	}
 	$name = "pdf/".date("d-m-Y").".pdf";
 	$pdf->Output("I",$name, true);
 } 
-
-
-//FmtBasic($pdf,"RTMOW1016IT1AO","ALIAKSANDR BOIKA","GOMEL","Belarus","August",17,2018);
-//FmtBasicPerformens($pdf,"RTMOW1016IT1AO","ALIAKSANDR2 BOIKA","GOMEL","Belarus","August",17,2018);
-/*
-ALIAKSANDR BOIKA
-ALIAKSANDR LOIKA
-ALIAKSANDR BOIKA
-GLIAKSANDR DOIKA
-VLIAKSANDR FOIKA
-ALIAKSANDR BOIKA
-FLIAKSANDR BOIKA
-SLIAKSANDR FOIKA
-*/
-
-
 
 
 function GenerateNumbers($names,$cityCode,$mount,$year,$t)
@@ -99,27 +81,42 @@ function EnicialNames($names)
 		$nf[] = $tmp[0][0].$tmp[1][0];
 	}
 
-/*	print_r($nf);
-	print_r(array_count_values($nf) );*/
-	foreach (array_count_values($nf) as $key => $value) {
+	//print_r($nf);
+
+	$i = 0;
+	foreach ($nf as $io) {
+		$k = 0;
+		for ($j=0; $j < $i; $j++) { 
+			if($nf[$j] == $io) $k++;
+		}
+		$res[] = $k == 0 ? $io : $io.$k;
+		$i++;
+	}
+
+	//$count_values = array_count_values($nf);
+	//print_r(array_count_values($nf) );
+	/*foreach ($count_values as $key => $value) {
 		
 		for($i = 0;$i<$value;$i++){
 			$res[] = $i == 0 ? $key : $key.$i;
 		}
-	}
+	}*/
+
+	//print_r($res);
+
 	return $res;
 }
 
-function FmtBasic(&$pdf,$code,$name,$city,$country,$mount,$day,$year,$curse)
+function FmtBasic(&$pdf,$code,$name,$city,$country,$mount,$day,$year,$curse,$instructor)
 {
 	$pdf->AddPage();
-	$pdf->Image($curse,0,0,297);
+	$pdf->Image($curse,0,10,297);
 
-
+	$pdf->Ln(11.7);
 	// code
 	$pdf->SetFont('helvetica','',8);
 	$pdf->SetTextColor( '0', '0', '0' );
-	$pdf->Ln(2);
+	
 	$pdf->Cell(232,10,"",0,0,'R',false);
 	$pdf->Cell(26,10,"".$code,0,1,'L',false);
 	//$pdf->Cell(0,8,$code,0,1,'R',false);
@@ -155,50 +152,11 @@ function FmtBasic(&$pdf,$code,$name,$city,$country,$mount,$day,$year,$curse)
 	$pdf->Ln(4);
 	$mount = ucfirst(strtolower($mount));
 	$pdf->Cell(0,6,"on $mount $day,$year",0,1,'C',false);
+
+	$pdf->SetFont('Arial','',7);
+	$pdf->SetTextColor( '0', '0', '0' );
+	$pdf->Ln(24);
+	$pdf->Cell(127,10,$instructor,0,1,'R',false);
 }
 
-function FmtBasicPerformens(&$pdf,$code,$name,$city,$country,$mount,$day,$year)
-{
-	$pdf->AddPage();
-	$pdf->Image('img/Basic+Perfomance.jpg',0,0,297);
 
-
-	// code
-	$pdf->SetFont('Arial','',8);
-	$pdf->SetTextColor( '0', '0', '0' );
-	$pdf->Ln(2);
-	$pdf->Cell(259,10,$code,0,1,'R',false);
-	//$pdf->Cell(0,8,$code,0,1,'R',false);
-
-	// curefly
-	$pdf->SetFont('Arial','B',20);
-	$pdf->SetTextColor( '0', '0', '0' );
-	$pdf->Ln(48);
-	//$pdf->Cell(0,8,'Hello World!',0,1,'C',false);
-
-	// name 
-	$pdf->SetFont('Arial','B',24);
-	$pdf->Ln(5);
-	$pdf->Cell(0,8,$name,0,1,'C',false);
-
-	// sucses 
-	$pdf->SetFont('Arial','',22);
-	$pdf->Ln(16);
-	//$pdf->Cell(0,8,'has successfuly completed',0,1,'C',false);
-
-	// name Curs 
-	$pdf->SetFont('Arial','B',40);
-	$pdf->Ln(22);
-	//$pdf->Cell(0,20,'FMT BASE',0,1,'C',false);
-
-	// where 
-	$pdf->SetFont('Arial','B',16);
-	$pdf->Ln(3);
-	$pdf->Cell(0,6,"in $city, $country",0,1,'C',false);
-
-	$pdf->SetFont('Arial','B',16);
-	$pdf->Ln(4);
-	$pdf->Cell(0,6,"on $mouns $day,$year",0,1,'C',false);
-}
-
-?>

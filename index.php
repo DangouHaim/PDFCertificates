@@ -25,7 +25,7 @@ elseif ($_COOKIE["AUTH"] != MD5("admin").MD5("admin")) {
 <body>
 	
 
-<br><br><br><br><br><br><br>
+<br><br><br><br>
 
 <section>
 	<div class="container">
@@ -257,13 +257,30 @@ elseif ($_COOKIE["AUTH"] != MD5("admin").MD5("admin")) {
 							</div>
 					  	</div>
 
+						<div class="form-group">
+						  	<div class="col-sm-12">
+						  		<input type="hidden">
+						  	</div>
+						</div>
+
+
+						<div class="form-group">
+						  	<div class="col-sm-12">
+						  		<label for="IdInstructor">Инструктор</label>
+						    	<input name="Instructor" required type="text" class="form-control" id="IdInstructor" placeholder="инструктор" value="">
+							</div>
+						 </div>
+
+
 					  	<div class="form-group">
 						  	<div class="col-sm-12">
 						  		<label for="idName">Имя (можно несколько в столбик)</label>
-					  			<textarea name="name" required class="form-control" rows="3" id="idName"></textarea>
+					  			<textarea name="name" required class="form-control" rows="15" id="idName"></textarea>
 					  		</div>
 					  	</div>
 
+
+				  	
 
 					<div class="form-group">
 						<div class="col-sm-12">
