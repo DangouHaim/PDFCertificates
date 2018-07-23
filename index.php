@@ -139,7 +139,7 @@ elseif ($_COOKIE["AUTH"] != MD5("admin").MD5("admin")) {
 								<option value='WZN'>SLEPCOVSKAYA</option>
 								<option value='AER'>SOCHI/ADLER</option>
 								<option value='WZO'>SOKOL</option>
-								<option value='LED'>ST.PETERSBURG</option>
+								<option value='LED'>ST. PETERSBURG</option>
 								<option value='WZP'>STARYJ-OSKOL</option>
 								<option value='STW'>STAVROPOL</option>
 								<option value='SWT'>STRZHEWOI</option>
@@ -234,22 +234,28 @@ elseif ($_COOKIE["AUTH"] != MD5("admin").MD5("admin")) {
 						  	<div class="col-sm-12">
 						  		<label for="idCurs">Курс</label>
 						  		<select name="Curs" required class="form-control" id="idCurs">
+						  			
 						  			<?	
+
+
+
 						  				$Curses = array(
-						  					"1. FMT Basic",
-						  					"2. FMT Basic+Perfomance",
-						  					"3. FMT Perfomance",
-						  					"4. FMT Blades",
-						  					"5. FMT Blades Advanced",
-						  					"6. FMT SCN",
-						  					"7. FMT SCN+MOV",
-						  					"8. FMT MOV",
-						  					"9. FMT Logopedics",
-						  					"10. FMT Dent",
-						  					"11. FMT Equine",
-						  					"12. FMT Special Course"
+						  					"FMT Basic" => 'img/basic.jpg',
+											"FMT Basic+Perfomance" => "img/2. FMT Basic+Perfomance.jpg",
+											"FMT Perfomance" => "img/3. FMT Perfomance.jpg",
+											"Individ. FMT Basic" => 'img/basic.jpg',
+											"Individ. FMT Basic+Perfomance" => "img/2. FMT Basic+Perfomance.jpg",
+											"Individ. FMT Perfomance" => "img/3. FMT Perfomance.jpg",
+											"FMT Blades" => "img/4. FMT Blades.jpg",
+											"FMT Blades Advanced" => "img/5. FMT Blades Advanced.jpg",
+											"FMT SCN" => "img/6. FMT SCN.jpg",
+											"FMT SCN+MOV" => "img/7. FMT SCN+MOV.jpg",
+											"FMT MOV" => "img/8. FMT MOV.jpg",
+											"FMT Logopedics" => "img/9. FMT Logopedics.jpg",
+											"FMT Dent" => "img/10. FMT Dent.jpg",
+											"FMT Equine" => "img/11. FMT Equine.jpg",
 						  				);
-										foreach ($Curses as $curse) {
+										foreach ($Curses as $curse => $val) {
 											echo "<option value=\"$curse\">$curse</option>";
 										}
 						  			?>
