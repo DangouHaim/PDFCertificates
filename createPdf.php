@@ -1,4 +1,5 @@
 <?php
+error_reporting(-1)
 require_once( "modules/fpdf.php" );
 
 $cityCode = array("ABA"=>"ABAKAN","DYR"=>"ANADYR","AAQ"=>"ANAPA","WZA"=>"APATITY","ARH"=>"ARKHANGELSK","ASF"=>"ASTRAKHAN","BWO"=>"BALAKOVO","BAX"=>"BARNAUL","EGO"=>"BELGOROD","BCX"=>"BELORECK","WZC"=>"BEREZNIKI","BQS"=>"BLAGOVESCHENSK","BTK"=>"BRATSK","UUA"=>"BUGULMA","BKA"=>"BYKOVO","CSY"=>"CHEBOKSARY","CEK"=>"CHELYABINSK","CEE"=>"CHEREPOVETS","HTA"=>"CHITA","WZD"=>"EJSK","SVX"=>"EKATERINBURG","ESL"=>"ELISTA","EV"=>"EVPATORIA","GDZ"=>"GELENDZIK","GRV"=>"GROZNYJ","WZE"=>"HANTY-MANSIJSK","INA"=>"INTA","IKT"=>"IRKUTSK","IWA"=>"IVANOVO","IJK"=>"IZHEVSK","KGD"=>"KALININGRAD","KZN"=>"KAZAN","KEJ"=>"KEMEROVO","KE"=>"KERCH","KHV"=>"KHABAROVSK","WZT"=>"KHIBINY","KVX"=>"KIROV","KVK"=>"KIROVSK","KGP"=>"KOGALYN","WZH"=>"KOLKHI","KXK"=>"KOMSOMOLSK-NA-AMURE","WZI"=>"KRAJNIJ","KRR"=>"KRASNODAR","KJA"=>"KRASNOJARSK","KRO"=>"KURGAN","KUR"=>"KURSK","LPK"=>"LIPETSK","GDX"=>"MAGADAN","MQF"=>"MAGNITOGORSK","WZJ"=>"MAJKOP","MCX"=>"MAKHACHKALA","MRV"=>"MINERALNYE-VODY","MJZ"=>"MIRNYJ","MOW"=>"MOSCOW","MMK"=>"MURMANSK","NBC"=>"NABEREVOYE-CHELNYB","NYM"=>"NADYM","WZL"=>"NAKHICHEVAN","NAL"=>"NALCHIK","NNM"=>"NARYAN-MAR","IGT"=>"NAZRAN","NFG"=>"NEFTEYUGANSK","NER"=>"NERYUNGRI","NJC"=>"NIZHNEVARTOVSK","GOJ"=>"NIZHNIY-NOVGOROD","NOJ"=>"NOJABRXSK","NSK"=>"NORILSK","GNO"=>"NOVGOROD-THE-GREAT","NOZ"=>"NOVOKUZNETSK","OVB"=>"NOVOSIBIRSK","NUX"=>"NOVYJ-URENGOJ","WZM"=>"NYAGAN","OMS"=>"OMSK","REN"=>"ORENBURG","OSW"=>"ORSK","PEZ"=>"PENZA","PEE"=>"PERM","PKC"=>"PETROPAVLOVSK-KAMCHA","PES"=>"PETROZAVODSK","PWE"=>"PEVEK","PYJ"=>"POLYARNYY","PTG"=>"PYATIGORSK","RAT"=>"RADUZHNYI","ROV"=>"ROSTOV","SLY"=>"SALEKHARD","KUF"=>"SAMARA","SKX"=>"SARANSK","RTW"=>"SARATOV","SIP"=>"SIMFEROPOL","WZN"=>"SLEPCOVSKAYA","AER"=>"SOCHI/ADLER","WZO"=>"SOKOL","LED"=>"ST. PETERSBURG","WZP"=>"STARYJ-OSKOL","STW"=>"STAVROPOL","SWT"=>"STRZHEWOI","SGC"=>"SURGUT","SUZ"=>"SUZDAL","SCW"=>"SYKTYVKAR","IKS"=>"TIKSI","TOF"=>"TOMSK","TVE"=>"TVER","TJM"=>"TYUMEN","UFA"=>"UFA","UCT"=>"UKHTA","UUD"=>"ULAN-UDE","ULY"=>"ULYANOVSK","USK"=>"USINSK","UIK"=>"UST-ILIMSK","OGZ"=>"VLADIKAVKAZ","VVO"=>"VLADIVOSTOK","VLK"=>"VOLGODONSK","VOG"=>"VOLGOGRAD","VGD"=>"VOLOGDA","VKT"=>"VORKUTA","VOZ"=>"VORONEZH","YKS"=>"YAKKUTSK",);
@@ -75,7 +76,21 @@ if(isset($_POST['name']) && isset($_POST['Country']) && isset($_POST['City']) &&
 		$i++;
 	}
 	$name = "pdf/".date("d-m-Y").".pdf";
-	$pdf->Output("I",$name, true);
+
+	if(!empty($_POST['Email'])){
+		$email = $_POST['Email'];
+		$pdf->Output("F",$name, true);
+		if(SendToMail($email,$name)){
+			echo "otpravleno on $email <br>";
+			if(unlink($name)){
+				echo "Udaleno";
+			}
+		}
+	}
+	else{
+		$pdf->Output("I",$name, true);	
+	}
+	
 } 
 
 function GenerateDate($day,$mount,$year,$day2=null,$mount2=null,$year2=null)
@@ -186,6 +201,39 @@ function FmtBasic(&$pdf,$code,$name,$city,$country,$date,$curse,$instructor)
 	$pdf->Ln(24);
 	$pdf->Cell(107.5,10,'',0,0,'R',false);
 	$pdf->Cell(100,10,$instructor,0,1,'L',false);
+}
+
+
+function SendToMail($email,$file){
+	$filename = $file; //Имя файла для прикрепления
+	$to = $email; //Кому
+	//$from = "def@gmail.com"; //От кого
+	$subject = "Test"; //Тема
+	$message = "Текстовое сообщение"; //Текст письма
+	$boundary = "---"; //Разделитель
+	/* Заголовки */
+	//$headers = "From: $from\nReply-To: $from\n";
+	$headers .= "Content-Type: multipart/mixed; boundary=\"$boundary\"";
+	$body = "--$boundary\n";
+	/* Присоединяем текстовое сообщение */
+	$body .= "Content-type: text/html; charset='utf-8'\n";
+	$body .= "Content-Transfer-Encoding: quoted-printablenn";
+	$body .= "Content-Disposition: attachment; filename==?utf-8?B?".base64_encode($filename)."?=\n\n";
+	$body .= $message."\n";
+	$body .= "--$boundary\n";
+	$file = fopen($filename, "r"); //Открываем файл
+	$text = fread($file, filesize($filename)); //Считываем весь файл
+	fclose($file); //Закрываем файл
+	/* Добавляем тип содержимого, кодируем текст файла и добавляем в тело письма */
+	$body .= "Content-Type: application/octet-stream; name==?utf-8?B?".base64_encode($filename)."?=\n"; 
+	$body .= "Content-Transfer-Encoding: base64\n";
+	$body .= "Content-Disposition: attachment; filename==?utf-8?B?".base64_encode($filename)."?=\n\n";
+	$body .= chunk_split(base64_encode($text))."\n";
+	$body .= "--".$boundary ."--\n";
+	if(mail($to, $subject, $body, $headers)) {
+		return true;
+	}
+	return false;
 }
 
 
