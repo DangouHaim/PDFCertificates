@@ -207,12 +207,12 @@ function FmtBasic(&$pdf,$code,$name,$city,$country,$date,$curse,$instructor)
 function SendToMail($email,$file){
 	$filename = $file; //Имя файла для прикрепления
 	$to = $email; //Кому
-	$from = "def@gmail.com"; //От кого
+	//$from = "def@gmail.com"; //От кого
 	$subject = "Test"; //Тема
 	$message = "Текстовое сообщение"; //Текст письма
 	$boundary = "---"; //Разделитель
 	/* Заголовки */
-	$headers = "From: $from\nReply-To: $from\n";
+	//$headers = "From: $from\nReply-To: $from\n";
 	$headers .= "Content-Type: multipart/mixed; boundary=\"$boundary\"";
 	$body = "--$boundary\n";
 	/* Присоединяем текстовое сообщение */
