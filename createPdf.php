@@ -253,4 +253,54 @@ function SendToMail($email,$file){
 	return false;
 }
 
+function FmtSpecial(&$pdf,$code,$name,$city,$country,$date,$curse,$instructor)
+{
+		$pdf->AddPage();
+	$pdf->Image($curse,0,10,297);
 
+	$pdf->Ln(11.7);
+	// code
+	$pdf->SetFont('helvetica','',8);
+	$pdf->SetTextColor( '0', '0', '0' );
+	
+	$pdf->Cell(232,10,"",0,0,'R',false);
+	$pdf->Cell(26,10,"".$code,0,1,'L',false);
+	//$pdf->Cell(0,8,$code,0,1,'R',false);
+
+	// curefly
+	$pdf->SetFont('Arial','B',20);
+	$pdf->SetTextColor( '0', '0', '0' );
+	$pdf->Ln(44);
+	//$pdf->Cell(0,8,'Hello World!',0,1,'C',false);
+
+	// name 
+	$pdf->SetFont('Arial','B',24);
+	$pdf->Cell(0,8,$name,0,1,'C',false);
+	$pdf->Ln(9);
+	// sucses 
+	$pdf->SetFont('Arial','',22);
+	$pdf->Ln(16);
+	//$pdf->Cell(0,8,'has successfuly completed',0,1,'C',false);
+
+	// name Curs 
+	$pdf->SetFont('Arial','B',40);
+	$pdf->Ln(22);
+	//$pdf->Cell(0,20,'FMT BASE',0,1,'C',false);
+
+	// where 
+	$pdf->SetFont('Arial','B',16);
+	$pdf->Ln(3);
+	$city = ucfirst(strtolower($city));
+	$pdf->Cell(0,6,"in $city, $country",0,1,'C',false);
+
+	$pdf->SetFont('Arial','B',16);
+	$pdf->Ln(4);
+	$mount = ucfirst(strtolower($mount));
+	$pdf->Cell(0,6,"on $date",0,1,'C',false);
+
+	$pdf->SetFont('Arial','',7);
+	$pdf->SetTextColor( '0', '0', '0' );
+	$pdf->Ln(24);
+	$pdf->Cell(107.5,10,'',0,0,'R',false);
+	$pdf->Cell(100,10,$instructor,0,1,'L',false);
+ }
