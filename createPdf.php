@@ -1,6 +1,6 @@
 <?php
-error_reporting(-1)
 require_once( "modules/fpdf.php" );
+error_reporting(0);
 
 $cityCode = array("ABA"=>"ABAKAN","DYR"=>"ANADYR","AAQ"=>"ANAPA","WZA"=>"APATITY","ARH"=>"ARKHANGELSK","ASF"=>"ASTRAKHAN","BWO"=>"BALAKOVO","BAX"=>"BARNAUL","EGO"=>"BELGOROD","BCX"=>"BELORECK","WZC"=>"BEREZNIKI","BQS"=>"BLAGOVESCHENSK","BTK"=>"BRATSK","UUA"=>"BUGULMA","BKA"=>"BYKOVO","CSY"=>"CHEBOKSARY","CEK"=>"CHELYABINSK","CEE"=>"CHEREPOVETS","HTA"=>"CHITA","WZD"=>"EJSK","SVX"=>"EKATERINBURG","ESL"=>"ELISTA","EV"=>"EVPATORIA","GDZ"=>"GELENDZIK","GRV"=>"GROZNYJ","WZE"=>"HANTY-MANSIJSK","INA"=>"INTA","IKT"=>"IRKUTSK","IWA"=>"IVANOVO","IJK"=>"IZHEVSK","KGD"=>"KALININGRAD","KZN"=>"KAZAN","KEJ"=>"KEMEROVO","KE"=>"KERCH","KHV"=>"KHABAROVSK","WZT"=>"KHIBINY","KVX"=>"KIROV","KVK"=>"KIROVSK","KGP"=>"KOGALYN","WZH"=>"KOLKHI","KXK"=>"KOMSOMOLSK-NA-AMURE","WZI"=>"KRAJNIJ","KRR"=>"KRASNODAR","KJA"=>"KRASNOJARSK","KRO"=>"KURGAN","KUR"=>"KURSK","LPK"=>"LIPETSK","GDX"=>"MAGADAN","MQF"=>"MAGNITOGORSK","WZJ"=>"MAJKOP","MCX"=>"MAKHACHKALA","MRV"=>"MINERALNYE-VODY","MJZ"=>"MIRNYJ","MOW"=>"MOSCOW","MMK"=>"MURMANSK","NBC"=>"NABEREVOYE-CHELNYB","NYM"=>"NADYM","WZL"=>"NAKHICHEVAN","NAL"=>"NALCHIK","NNM"=>"NARYAN-MAR","IGT"=>"NAZRAN","NFG"=>"NEFTEYUGANSK","NER"=>"NERYUNGRI","NJC"=>"NIZHNEVARTOVSK","GOJ"=>"NIZHNIY-NOVGOROD","NOJ"=>"NOJABRXSK","NSK"=>"NORILSK","GNO"=>"NOVGOROD-THE-GREAT","NOZ"=>"NOVOKUZNETSK","OVB"=>"NOVOSIBIRSK","NUX"=>"NOVYJ-URENGOJ","WZM"=>"NYAGAN","OMS"=>"OMSK","REN"=>"ORENBURG","OSW"=>"ORSK","PEZ"=>"PENZA","PEE"=>"PERM","PKC"=>"PETROPAVLOVSK-KAMCHA","PES"=>"PETROZAVODSK","PWE"=>"PEVEK","PYJ"=>"POLYARNYY","PTG"=>"PYATIGORSK","RAT"=>"RADUZHNYI","ROV"=>"ROSTOV","SLY"=>"SALEKHARD","KUF"=>"SAMARA","SKX"=>"SARANSK","RTW"=>"SARATOV","SIP"=>"SIMFEROPOL","WZN"=>"SLEPCOVSKAYA","AER"=>"SOCHI/ADLER","WZO"=>"SOKOL","LED"=>"ST. PETERSBURG","WZP"=>"STARYJ-OSKOL","STW"=>"STAVROPOL","SWT"=>"STRZHEWOI","SGC"=>"SURGUT","SUZ"=>"SUZDAL","SCW"=>"SYKTYVKAR","IKS"=>"TIKSI","TOF"=>"TOMSK","TVE"=>"TVER","TJM"=>"TYUMEN","UFA"=>"UFA","UCT"=>"UKHTA","UUD"=>"ULAN-UDE","ULY"=>"ULYANOVSK","USK"=>"USINSK","UIK"=>"UST-ILIMSK","OGZ"=>"VLADIKAVKAZ","VVO"=>"VLADIVOSTOK","VLK"=>"VOLGODONSK","VOG"=>"VOLGOGRAD","VGD"=>"VOLOGDA","VKT"=>"VORKUTA","VOZ"=>"VORONEZH","YKS"=>"YAKKUTSK",);
 
@@ -18,7 +18,7 @@ $Curses = array(
 	"FMT SCN" => "img/6. FMT SCN.jpg",
 	"FMT SCN+MOV" => "img/7. FMT SCN+MOV.jpg",
 	"FMT MOV" => "img/8. FMT MOV.jpg",
-	"FMT Logopedics" => "img/9. FMT Logopedics.jpg",
+	"FMT Logopedix" => "img/9. FMT Logopedics.jpg",
 	"FMT Dent" => "img/10. FMT Dent.jpg",
 	"FMT Equine" => "img/11. FMT Equine.jpg",
 );
@@ -34,9 +34,9 @@ $tcode = array(
 	"FMT Blades" => "BL",
 	"FMT Blades Advanced" => "BLA",
 	"FMT SCN" => "SC",
-	"FMT SCN+MOV" => "SM",
+	"FMT SCN+MOV" => "SMV",
 	"FMT MOV" => "MV",
-	"FMT Logopedics" => "LG",
+	"FMT Logopedix" => "LG",
 	"FMT Dent" => "DN",
 	"FMT Equine" => "EQ",
 );
@@ -53,6 +53,12 @@ if(isset($_POST['name']) && isset($_POST['Country']) && isset($_POST['City']) &&
 	$names = explode("\n",$_POST['name']);
 	$i = 0;
 
+	if(!empty($_POST['cityR']) && !empty($_POST['cityRK'])){
+		$tmp = strtoupper($_POST['cityRK']);
+		$cityCode[$tmp]  = $_POST['cityR'];
+		$city = $tmp;
+	}
+
 	if(!empty($_POST['Day2']) && !empty($_POST['Year2']) && !empty($_POST['Mounth2'])) {
 		$day2 = $_POST['Day2'];
 		$mount2 = $_POST['Mounth2'];
@@ -67,7 +73,7 @@ if(isset($_POST['name']) && isset($_POST['Country']) && isset($_POST['City']) &&
 	$date = GenerateDate($day,$MonthArray[$mount-1],$year,$day2,$MonthArray[$mount2-1],$year2);
 	$pdf = new FPDF('L','mm','A4');
 	foreach ($Gn as $num) {
-		if ($curs =="FMT Logopedics" || $curs == "FMT Dent") {
+		if ($curs =="FMT Logopedix" || $curs == "FMT Dent") {
 			FmtSpecial($pdf,$num,$names[$i],$cityCode[$city],$contry,$date,$Curses[$curs],$Instructor);
 		}
 		else{
@@ -96,7 +102,10 @@ if(isset($_POST['name']) && isset($_POST['Country']) && isset($_POST['City']) &&
 function GenerateDate($day,$mount,$year,$day2=null,$mount2=null,$year2=null)
 {
 	if($day2 != null)
-		return $mount." ".$day." & ".$day2." ".$mount2.", 20".$year2;
+		if($mount2 != $mount)
+			return $mount." ".$day." - ".$day2." ".$mount2.", 20".$year2;
+		else 
+			return $mount." ".$day." - ".$day2.", 20".$year2;
 	return $mount." ".$day.", 20".$year;
 }
 
@@ -132,7 +141,15 @@ function EnicialNames($names)
 		for ($j=0; $j < $i; $j++) { 
 			if($nf[$j] == $io) $k++;
 		}
-		$res[] = $k == 0 ? $io : $io.$k;
+		$res[] = $k == 0 ? $io : $io.++$k;
+		if($k > 0){
+			for ($j=0; $j < $i; $j++) { 
+				if(strrpos($nf[$j],$io) !== false){
+					$res[$j] = $io."1";
+					break;
+				} 
+			}
+		}
 		$i++;
 	}
 

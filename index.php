@@ -165,6 +165,21 @@ elseif ($_COOKIE["AUTH"] != MD5("admin").MD5("admin")) {
 							<option value='YKS'>YAKKUTSK</option>
 				    	</select>
 					</div>
+					
+
+				  	<div class="col-md-6">
+				  		<label for="cityR">Город (City)</label>
+				    	<input name="cityR"  type="text" class="form-control" id="cityR" placeholder="ручной ввод">
+					</div>
+
+					<div class="col-md-6">
+				  		<label for="cityRK">Код города (City code)</label>
+				    	<input name="cityRK"  type="text" class="form-control" id="cityRK" placeholder="ручной ввод">
+					</div>
+						
+					<div class="col-md-6">
+						<a href="http://cert.rtxhub.com/codes">Коды городов (City code)</a>
+					</div>
 
 					<div class="col-md-12">
 						<hr>
@@ -297,7 +312,7 @@ elseif ($_COOKIE["AUTH"] != MD5("admin").MD5("admin")) {
 										"FMT SCN" => "img/6. FMT SCN.jpg",
 										"FMT SCN+MOV" => "img/7. FMT SCN+MOV.jpg",
 										"FMT MOV" => "img/8. FMT MOV.jpg",
-										"FMT Logopedics" => "img/9. FMT Logopedics.jpg",
+										"FMT Logopedix" => "img/9. FMT Logopedics.jpg",
 										"FMT Dent" => "img/10. FMT Dent.jpg",
 										"FMT Equine" => "img/11. FMT Equine.jpg",
 					  				);
