@@ -300,7 +300,7 @@ elseif ($_COOKIE["AUTH"] != MD5("admin").MD5("admin")) {
 					  		<label for="idCurs">Курс (Course)</label>
 					  		<select name="Curs" required class="form-control" id="idCurs">
 					  			<?	
-					  				$Curses = array(
+					  				$Courses = array(
 					  					"FMT Basic" => 'img/basic.jpg',
 										"FMT Basic+Perfomance" => "img/2. FMT Basic+Perfomance.jpg",
 										"FMT Perfomance" => "img/3. FMT Perfomance.jpg",
@@ -316,8 +316,8 @@ elseif ($_COOKIE["AUTH"] != MD5("admin").MD5("admin")) {
 										"FMT Dent" => "img/10. FMT Dent.jpg",
 										"FMT Equine" => "img/11. FMT Equine.jpg",
 					  				);
-									foreach ($Curses as $curse => $val) {
-										echo "<option value=\"$curse\">$curse</option>";
+									foreach ($Courses as $course => $val) {
+										echo "<option value=\"$course\">$course</option>";
 									}
 					  			?>
 							</select>

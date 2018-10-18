@@ -6,7 +6,7 @@ $cityCode = array("ABA"=>"ABAKAN","DYR"=>"ANADYR","AAQ"=>"ANAPA","WZA"=>"APATITY
 
 $MonthArray = array("January","February","March","April","May","June","July","August","September","October","November","December");
 
-$Curses = array(
+$Courses = array(
 	"FMT Basic" => 'img/basic.jpg',
 	"FMT Basic+Perfomance" => "img/2. FMT Basic+Perfomance.jpg",
 	"FMT Perfomance" => "img/3. FMT Perfomance.jpg",
@@ -74,10 +74,10 @@ if(isset($_POST['name']) && isset($_POST['Country']) && isset($_POST['City']) &&
 	$pdf = new FPDF('L','mm','A4');
 	foreach ($Gn as $num) {
 		if ($curs =="FMT Logopedix" || $curs == "FMT Dent") {
-			FmtSpecial($pdf,$num,$names[$i],$cityCode[$city],$contry,$date,$Curses[$curs],$Instructor);
+			FmtSpecial($pdf,$num,$names[$i],$cityCode[$city],$contry,$date,$Courses[$curs],$Instructor);
 		}
 		else{
-			FmtBasic($pdf,$num,$names[$i],$cityCode[$city],$contry,$date,$Curses[$curs],$Instructor);
+			FmtBasic($pdf,$num,$names[$i],$cityCode[$city],$contry,$date,$Courses[$curs],$Instructor);
 		}
 		$i++;
 	}
@@ -167,10 +167,10 @@ function EnicialNames($names)
 	return $res;
 }
 
-function FmtBasic(&$pdf,$code,$name,$city,$country,$date,$curse,$instructor)
+function FmtBasic(&$pdf,$code,$name,$city,$country,$date,$course,$instructor)
 {
 	$pdf->AddPage();
-	$pdf->Image($curse,0,10,297);
+	$pdf->Image($course,0,10,297);
 
 	$pdf->Ln(11.7);
 	// code
@@ -253,10 +253,10 @@ function SendToMail($email,$file){
 	return false;
 }
 
-function FmtSpecial(&$pdf,$code,$name,$city,$country,$date,$curse,$instructor)
+function FmtSpecial(&$pdf,$code,$name,$city,$country,$date,$course,$instructor)
 {
 		$pdf->AddPage();
-	$pdf->Image($curse,0,10,297);
+	$pdf->Image($course,0,10,297);
 
 	$pdf->Ln(11.7);
 	// code
